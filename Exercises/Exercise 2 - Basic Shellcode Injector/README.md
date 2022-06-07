@@ -8,15 +8,15 @@ Create a new project that injects your shellcode in a remote process, such as `e
 
 This exercise is actually very similar to [Exercise 1](../Exercise%201%20-%20Basic%20Shellcode%20Loader/) in terms of implementation. The basic approach is comparable to the `VirtualAlloc()` method we saw there, except this time we are using a different API combination: `OpenProcess()` to get a handle on the target process, `VirtualAllocEx()` to allocate executable memory in the remote process, `WriteProcessMemory()` to copy the shellcode into the allocated, and `CreateRemoteThread()` to execute the shellcode as part of the target process.
 
-> 😎 If you're feeling adventurous, you can use the native API (Nt-functions from `NTDLL.dll`) counterparts of these functions instead. See also [bonus exercise 3](../BONUS%20Exercise%203%20-%20Basic%20Injector%20Using%20Native%20APIs/).
+> 😎 If you're feeling adventurous, you can use the native API (Nt-functions from `NTDLL.dll`) counterparts of these functions instead. See also [bonus exercise 3](../BONUS%20Exercise%203%20-%20Basic%20Injector%20Using%20Native%20APIs/). Alternatively, look at other ways to expose your shellcode to the target process' memory, such as `NtCreateSection()` and `NtMapViewOfSection()` (example [here](https://www.ired.team/offensive-security/code-injection-process-injection/ntcreatesection-+-ntmapviewofsection-code-injection)).
 
 ### Getting a handle
 
-Keep in mind that in order to get a handle, we need to have sufficient privileges over the target process. This generally means that you can only get a handle for a process owned by the current user, and not those owned by other users or managed by the system itself (makes sense right?). If you are executing from a privileged context (i.e. running as `SYSTEM` or with the `SeDebugPrivilege` enabled), you can get a handle to any process. 
+Keep in mind that in order to get a handle, we need to have sufficient privileges over the target process. This generally means that you can only get a handle for a process owned by the current user, and not those owned by other users or managed by the system itself (makes sense right?). However, if you are executing from a privileged context (i.e. running as `SYSTEM` or with the `SeDebugPrivilege` enabled) you can get a handle to any process, including system processes. 
 
 When designing malware that injects remotely, you need to be conscious about the target process that you choose. Choosing the wrong process may cause your malware to fail because the process is not present, or you have insufficient privileges. Furthermore, injecting from a privileged context into a low-privileged process will drop your privileges.
 
-> ℹ This is why making the target process configurable and basing it on the target environment is a good idea. You may hardcode the name or process ID of `explorer.exe` for now, we will improve that functionality in [bonus exercise 2](../BONUS%20Exercise%202%20-%20Basic%20Injector%20With%20Dynamic%20Target/).
+> ℹ **Note:** This is why making the target process configurable and basing it on the target environment is a good idea. You may hardcode the name or process ID of `explorer.exe` for now, we will improve that functionality in [bonus exercise 2](../BONUS%20Exercise%202%20-%20Basic%20Injector%20With%20Dynamic%20Target/).
 
 ## References
 
