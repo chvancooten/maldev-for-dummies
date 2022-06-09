@@ -6,7 +6,7 @@ Modify your injector from [Exercise 2](../Exercise%202%20-%20Basic%20Shellcode%2
 
 ## Tips
 
-This is a programming exercise more than anything else. Adding functionality like this is a great way to get better acquainted with chosen programming language! The injector program should prompt the user for a process name via the command line, and resolve that name into a process ID (look into the `CreateToolhelp32Snapshot()` API) if needed, spawning the process if it does not yet exist (for the purposes of this exercise, you may assume that the binary will exist in `C:\Windows\System32\`). Then, the injector should use this process as a target for injection as before.
+This is a programming exercise more than anything else. Adding functionality like this is a great way to get better acquainted with chosen programming language! The injector program should prompt the user for a process name via the command line, and resolve that name into a process ID (look into the `CreateToolhelp32Snapshot()` API) if needed, spawning the process if it does not yet exist (for the purposes of this exercise, you may assume that the binary will exist in the user's path). Then, the injector should use this process as a target for injection as before.
 
 ## References
 

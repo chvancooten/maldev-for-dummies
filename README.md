@@ -69,6 +69,16 @@ nim c -d:release -d:strip --opt:size filename.nim
 
 Optionally you can hide the console window by adding `--app:gui` as well.
 
+## Dependencies
+
+### Nim 
+
+Most Nim programs depend on a library called "Winim" to interface with the Windows API. You can install the library with the `Nimble` package manager as follows (after installing Nim):
+
+```
+nimble install winim
+```
+
 ## Resources
 
 The workshop slides reference some resources that you can use to get started. Additional resources are listed in the `README.md` files for every exercise!
