@@ -4,7 +4,6 @@ import osproc # For spawning processes
 import strformat
 import winim
 
-
 # Base code taken from Exercise 2, refer there if anything is unclear
 
 # Helper function to to convert a WCHAR array to string, needed for the getProcessByName() function
