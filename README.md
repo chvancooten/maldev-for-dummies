@@ -4,7 +4,7 @@
 
 This repository contains the slides and accompanying exercises for the 'MalDev for Dummies' workshop that will be facilitated at Hack in Paris 2022 (additional conferences TBA 👀). The exercises will remain available here to be completed at your own pace - the learning process should never be rushed! Issues and pull requests to this repo with questions and/or suggestions are welcomed.
 
-> ⚠ Disclaimer: Malware development is a skill that can -and should- be used for good, to further the field of (offensive) security and keep our defenses sharp. If you ever use this skillset to perform activities that you have no authorization for, you are a bigger dummy than this workshop is intended for and you should skidaddle on out of here.
+> ⚠ **Disclaimer:** Malware development is a skill that can -and should- be used for good, to further the field of (offensive) security and keep our defenses sharp. If you ever use this skillset to perform activities that you have no authorization for, you are a bigger dummy than this workshop is intended for and you should skidaddle on out of here.
 
 ## Workshop Description
 
@@ -29,12 +29,46 @@ To get started with malware development, you will need a dev machine so that you
 - **Golang** (not supported during workshop):Follow the [download instructions](https://go.dev/doc/install).
 - **Rust** (not supported during workshop): [Rustup](https://www.rust-lang.org/tools/install) can be used to install Rust along with the required toolchains. 
 
-> ℹ Note: Oftentimes, package managers such as apt or software management tools such as  Chocolatey can be used to automate the installation and management of dependencies in a convenient and repeatable way. Be conscious however that versions in package managers are often behind on the real thing! Below is an example Chocolatey command to install the mentioned tooling all at once.
+Don't forget to disable Windows Defender or add the appropriate exclusions, so your hard work doesn't get quarantined!
+
+> ℹ **Note:** Oftentimes, package managers such as apt or software management tools such as  Chocolatey can be used to automate the installation and management of dependencies in a convenient and repeatable way. Be conscious however that versions in package managers are often behind on the real thing! Below is an example Chocolatey command to install the mentioned tooling all at once.
 >
 > ```
 >  choco install -y nim choosenim go rust vscode visualstudio2019community dotnetfx
 > ```
 
+## Compiling programs
+
+Both C# and Nim are *compiled* languages, meaning that a compiler is used to translate your source code into binary executables of your chosen format. The process of compilation differs per language. 
+
+### C#
+
+C# code (`.cs` files) can either be compiled directly (with the `csc` utility) or via Visual Studio itself. The source code in this repo can be compiled as follows.
+
+> ℹ **Note:** Make sure you run the below command in a "Visual Studio Developer Command Prompt" so it knows where to find `csc`, it is recommended to use the "x64 Native Tools Command Prompt" for your version of Visual Studio.
+
+```
+csc filename.exe /unsafe
+```
+
+You can enable compile-time optimizations with the `/optimize` flag. You can hide the console window by adding `/target:winexe` as well, or compile as DLL with `/target:library` (but make sure your code structure is suitable for this).
+
+### Nim
+
+Nim code (`.nim` files) is compiled with the `nim c` command. The source code in this repo can be compiled as follows.
+
+```
+nim c filename.nim
+```
+
+If you want to optimize your build for size and strip debug information (much better for opsec!), you can add the following flags.
+
+```
+nim c -d:release -d:strip --opt:size filename.nim
+```
+
+Optionally you can hide the console window by adding `--app:gui` as well.
+
 ## Resources
 
-The workshop slides reference some resources that you can use to get started.
+The workshop slides reference some resources that you can use to get started. Additional resources are listed in the `README.md` files for every exercise!
