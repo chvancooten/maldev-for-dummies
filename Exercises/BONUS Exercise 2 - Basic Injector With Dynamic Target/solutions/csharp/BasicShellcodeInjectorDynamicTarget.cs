@@ -88,7 +88,7 @@ namespace Injector
                     p.Start();
                     pid = p.Id;
                 } catch {
-                    Console.WriteLine("Could not launch target process.");
+                    Console.WriteLine("Could not launch specified process.");
                     return;
                 }
             } else {

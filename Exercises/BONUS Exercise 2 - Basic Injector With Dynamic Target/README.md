@@ -17,8 +17,8 @@ This is a programming exercise more than anything else. Adding functionality lik
 
 ### Nim
 
-- [rdstdin library](https://nim-lang.org/docs/rdstdin.html)
-- [Line 36-48 of minidump_bin.nim](https://github.com/byt3bl33d3r/OffensiveNim/blob/965c44cec96575758eaa42622f699b6ea0d1041a/src/minidump_bin.nim#L36-L48)
+- [commandLineParams](https://nim-lang.org/docs/os.html#commandLineParams)
+- [minidump_bin.nim](https://github.com/byt3bl33d3r/OffensiveNim/blob/965c44cec96575758eaa42622f699b6ea0d1041a/src/minidump_bin.nim#L36-L48)
 
 ## Solution
 
