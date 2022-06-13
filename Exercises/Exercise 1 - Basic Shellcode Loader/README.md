@@ -37,7 +37,7 @@ Copying memory can be done without API calls using `Marshal.copy` for C# or `cop
 
 > ⚠ **Note:** Depending on the type of shellcode you are using, you may need to use the `WaitForSingleObject()` API to keep your program alive while it is running your shellcode. This is only required for long-running shellcodes, such as a CobaltStrike beacon.
 
-> 😎 If you're feeling adventurous, you can use the native API (Nt-functions from `NTDLL.dll`) counterparts of these functions instead. See also [bonus exercise 1](../BONUS%20Exercise%201%20-%20Basic%20Loader%20Without%20CreateThread/).
+> 😎 If you're feeling adventurous, you can use the native API (Nt-functions from `NTDLL.dll`) counterparts of these functions instead. See also [bonus exercise 1](../BONUS%20Exercise%201%20-%20Basic%20Loader%20Without%20CreateThread/). There are many more API functions to explore as well, for an overview check out [malapi.io](https://malapi.io/).
 
 ### Invoking the Windows API (C# only)
 

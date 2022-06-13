@@ -10,6 +10,8 @@ We discussed some loading methods in the slides and [Exercise 1](../BONUS%20Exer
 
 > ℹ **Note:** You may wonder why we used `NtCreateThreadEx()` instead of `NtCreateThread()` for local execution. The answer is that `NtCreateThreadEx()` is much simpler to use: the `NtCreateThread()` function requires us to initialize a full 'Thread Information Block' (TIB) before we can call it, and the `NtCreateThreadEx()` variant does not.
 
+There are plenty of alternatives to the above. Check out [malapi.io](https://malapi.io/) for an excellent overview of Windows API functions that can be used maliciously. Especially the 'Injection' section is relevant here!
+
 > 😎 If you're feeling adventurous, use this opportunity to completely get rid of all high-level API calls and use only the native API. It's harder to write, but using this API will definitely become a vital skill when looking at EDR evasion later on.
 
 ## References
