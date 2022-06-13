@@ -43,7 +43,7 @@ Both C# and Nim are *compiled* languages, meaning that a compiler is used to tra
 
 ### C#
 
-C# code (`.cs` files) can either be compiled directly (with the `csc` utility) or via Visual Studio itself. The source code in this repo can be compiled as follows.
+C# code (`.cs` files) can either be compiled directly (with the `csc` utility) or via Visual Studio itself. Most source code in this repo (except the solution to [bonus exercise 3](./Exercises/BONUS%20Exercise%203%20-%20Basic%20EDR%20Evasion/solutions/csharp/)) can be compiled as follows.
 
 > ℹ **Note:** Make sure you run the below command in a "Visual Studio Developer Command Prompt" so it knows where to find `csc`, it is recommended to use the "x64 Native Tools Command Prompt" for your version of Visual Studio.
 
