@@ -14,10 +14,11 @@ Getting access to a commercial EDR is not easy for everyone. A good way to test 
 
 ## References
 
-- [Blinding EDR On Windows
-](https://synzack.github.io/Blinding-EDR-On-Windows/)
+- [Blinding EDR On Windows](https://synzack.github.io/Blinding-EDR-On-Windows/)
 - [A tale of EDR bypass methods](https://s3cur3th1ssh1t.github.io/A-tale-of-EDR-bypass-methods/)
 - [Lets Create An EDR… And Bypass It!](https://ethicalchaos.dev/2020/05/27/lets-create-an-edr-and-bypass-it-part-1/)
+
+Refer to [Exercise 3](../Exercise%203%20-%20Basic%20AV%20Evasion/) for more references.
 
 ## Solution
 

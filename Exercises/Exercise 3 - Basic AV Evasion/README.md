@@ -57,7 +57,7 @@ A viable alternative for testing against Windows Defender is [ThreatCheck](https
 
 ### Nim
 
-- [NimlineWhispers](https://github.com/ajpc500/NimlineWhispers2)
+- [NimlineWhispers2](https://github.com/ajpc500/NimlineWhispers2) or [NimlineWhispers3](https://github.com/klezVirus/NimlineWhispers3)
 - [suspended_thread_injection.nim](https://github.com/byt3bl33d3r/OffensiveNim/blob/master/src/suspended_thread_injection.nim)
 - [Denim](https://github.com/moloch--/denim)
 
