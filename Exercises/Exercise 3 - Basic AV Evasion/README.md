@@ -2,7 +2,7 @@
 
 ## Description
 
-Implement one or more of the described techniques so that your shellcode loader / injector bypasses **Windows Defender Antivirus**.
+Implement one or more of the described evasion techniques in your shellcode loader / injector and test it against AV.
 
 ## Tips
 
@@ -64,4 +64,4 @@ A viable alternative for testing against Windows Defender is [ThreatCheck](https
 ## Solution
 Example solutions are provided in the [solutions folder](solutions/) ([C#](solutions/csharp/), [Nim](solutions/nim/)). Keep in mind that there is no "right" answer, if you made it work that's a valid solution!
 
-> ℹ **Note:** The example solution may be detected by AV due to the fact that it is available publicly. You should be able to bypass defender by using similar techniques though!
+> ℹ **Note:** The example solution may be detected by AV due to the fact that it is available publicly. You should be able to bypass antivirus by using similar techniques though!

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 // Base code taken from Exercise 2, refer there if anything is unclear
+
 // While there is a lot more evasion to do here, this example bypasses Windows Defender
 // It also scores a 'low' 3/26 on Antiscan (your mileage may vary)
 
