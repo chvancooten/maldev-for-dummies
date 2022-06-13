@@ -38,7 +38,7 @@ namespace Injector
         }
 
         // P/Invoke declarations
-        // Note that this still causes indicators to appear, see Bonus Exercise 4 for details
+        // Note that this still causes indicators to appear, see Bonus Exercise 3 for details
         [Flags]
         public enum ProcessAccessFlags : uint
         {
