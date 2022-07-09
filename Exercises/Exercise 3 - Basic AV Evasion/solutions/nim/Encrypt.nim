@@ -1,6 +1,10 @@
 import std/strformat
 import strutils 
 
+# Helper program to define encrypted shellcode and strings
+# Alternatively, you can use helper tools like the below to encrypt your data
+# https://github.com/chvancooten/OSEP-Code-Snippets/blob/main/Linux%20Shellcode%20Encoder/shellcodeCrypter-bin.py
+
 # Define our key, in this case we use a single-byte key for XOR operations
 # This key HAS TO match the key provided in 'BasicAVEvasion.nim' or decryption will fail
 const key: uint8 = 0x37
@@ -15,13 +19,15 @@ proc xor_encrypt[T,I](shellcode: array[T,I]): seq[byte] =
 
         result.add(newByte)
 
+# Overload the above function to also accept a string as input
 proc xor_encrypt(shellcode: string): seq[byte] =
     for i in 0..(shellcode.len-1):
         let 
             byteInt: uint8 = cast[uint8](shellcode[i])
             newByteInt: uint8 = byteInt xor key
             newByte: byte = cast[byte](newByteInt)
-
+            
+        # We still return a byte-array here because the encrypted string may contain unprintable bytes
         result.add(newByte)
 
 # Helper function to print a byte array in the right format
