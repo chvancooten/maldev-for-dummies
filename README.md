@@ -26,7 +26,7 @@ To get started with malware development, you will need a dev machine so that you
 
 - **C#**: Visual Studio will give you the option to include the .NET packages you will need to develop C#. If you want to develop without Visual Studio, you can download the [.NET Framework](https://dotnet.microsoft.com/en-us/download/dotnet-framework) separately.
 - **Nim lang**: Follow the [download instructions](https://nim-lang.org/install.html). [Choosenim](https://github.com/dom96/choosenim) is a convenient utility that can be used to automate the installation process.
-- **Golang** (not supported during workshop): Follow the [download instructions](https://go.dev/doc/install).
+- **Golang** (thanks to @nodauf for the PR): Follow the [download instructions](https://go.dev/doc/install).
 - **Rust** (not supported during workshop): [Rustup](https://www.rust-lang.org/tools/install) can be used to install Rust along with the required toolchains. 
 
 Don't forget to disable Windows Defender or add the appropriate exclusions, so your hard work doesn't get quarantined!
