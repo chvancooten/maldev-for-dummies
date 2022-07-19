@@ -1,0 +1,13 @@
+github.com/Binject/debug v0.0.0-20200830173345-f54480b6530f h1:aANCCkNbGzwXFh7dubh5FgvlZXuyRnZHcHZXmkRLV/A=
+github.com/Binject/debug v0.0.0-20200830173345-f54480b6530f/go.mod h1:QzgxDLY/qdKlvnbnb65eqTedhvQPbaSP2NqIbcuKvsQ=
+github.com/C-Sto/BananaPhone v0.0.0-20220220002628-6585e5913761 h1:0144WWUvo86bVDEkxb3vmM92DCEsrkSYSd5gV1YlGKE=
+github.com/C-Sto/BananaPhone v0.0.0-20220220002628-6585e5913761/go.mod h1:QsEPWHZooj8uXL2YEdpQX+hDr00Plw7myenTiduBHRA=
+github.com/awgh/rawreader v0.0.0-20200626064944-56820a9c6da4 h1:cIAK2NNf2yafdgpFRNJrgZMwvy61BEVpGoHc2n4/yWs=
+github.com/awgh/rawreader v0.0.0-20200626064944-56820a9c6da4/go.mod h1:SalMPBCab3yuID8nIhLfzwoBV+lBRyaC7NhuN8qL8xE=
+github.com/nodauf/bananaWinSyscall v0.0.0-20220719142629-6af8394fa8b6 h1:5aHZ5mG7lqZzv6v/SwKucWpFBh7D3MZNSmI3n653tBA=
+github.com/nodauf/bananaWinSyscall v0.0.0-20220719142629-6af8394fa8b6/go.mod h1:SNvKUNOBgU3cF2It8mYc3gfZLLLnAVU+5WXWVJ32Ij0=
+github.com/nodauf/go-windows v0.0.0-20220718153614-632c21cbbab5 h1:EQRvs4IfJHDgU8bPFsMIOq3tHgs9DBDpB56u2lVmX5Y=
+github.com/nodauf/go-windows v0.0.0-20220718153614-632c21cbbab5/go.mod h1:pOg5D0UsW/3eSAUtKu1V9dKd6Z+M4NsUij66hEdMPf8=
+golang.org/x/sys v0.0.0-20200828194041-157a740278f4/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 h1:0A+M6Uqn+Eje4kHMK80dtF3JCXC4ykBgQG4Fe06QRhQ=
+golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
