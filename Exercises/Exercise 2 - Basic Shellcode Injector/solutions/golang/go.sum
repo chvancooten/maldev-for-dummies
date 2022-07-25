@@ -1,0 +1,6 @@
+github.com/nodauf/go-windows v0.0.0-20220718145053-121643d3ea9e h1:mdJ0mrJSo9LNBOBFBKq5mHNYxkVcTNLguXjnyJ6Bjh0=
+github.com/nodauf/go-windows v0.0.0-20220718145053-121643d3ea9e/go.mod h1:pOg5D0UsW/3eSAUtKu1V9dKd6Z+M4NsUij66hEdMPf8=
+github.com/nodauf/go-windows v0.0.0-20220718153614-632c21cbbab5 h1:EQRvs4IfJHDgU8bPFsMIOq3tHgs9DBDpB56u2lVmX5Y=
+github.com/nodauf/go-windows v0.0.0-20220718153614-632c21cbbab5/go.mod h1:pOg5D0UsW/3eSAUtKu1V9dKd6Z+M4NsUij66hEdMPf8=
+golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 h1:0A+M6Uqn+Eje4kHMK80dtF3JCXC4ykBgQG4Fe06QRhQ=
+golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
