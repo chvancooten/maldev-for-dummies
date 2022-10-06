@@ -1,18 +1,18 @@
 # Malware Development for Dummies
 
-*In the age of EDR, red team operators cannot get away with using pre-compiled payloads anymore. As such, malware development is becoming a vital skill for any operator. Getting started with maldev may seem daunting, but is actually very easy. This workshop will show you all you need to get started!*
+*In the age of EDR, red team operators cannot get away with using pre-compiled payloads anymore. As such, malware development is becoming a vital skill for any operator. Getting started with MalDev may seem daunting, but is actually very easy. This workshop will show you all you need to get started!*
 
 This repository contains the slides and accompanying exercises for the 'MalDev for Dummies' workshop that will be facilitated at Hack in Paris 2022 (additional conferences TBA 👀). The exercises will remain available here to be completed at your own pace - the learning process should never be rushed! Issues and pull requests to this repo with questions and/or suggestions are welcomed.
 
-> ⚠ **Disclaimer:** Malware development is a skill that can -and should- be used for good, to further the field of (offensive) security and keep our defenses sharp. If you ever use this skillset to perform activities that you have no authorization for, you are a bigger dummy than this workshop is intended for and you should skidaddle on out of here.
+> ⚠ **Disclaimer:** Malware development is a skill that can -and should- be used for good, to further the field of (offensive) security and keep our defenses sharp. If you ever use this skill set to perform activities that you have no authorization for, you are a bigger dummy than this workshop is intended for and you should skidaddle on out of here.
 
 ## Workshop Description
 
 With antivirus (AV) and Enterprise Detection and Response (EDR) tooling becoming more mature by the minute, the red team is being forced to stay ahead of the curve. Gone are the times of `execute-assembly` and dropping unmodified payloads on disk - if you want your engagements to last longer than a week you will have to step up your payload creation and malware development game. Starting out in this field can be daunting however, and finding the right resources is not always easy.
 
-This workshop is aimed at beginners in the space and will guide you through your first steps as a malware developer. It is aimed primarily at offensive practitioners, but defensive practitioners are also very welcome to attend and broaden their skillset. 
+This workshop is aimed at beginners in the space and will guide you through your first steps as a malware developer. It is aimed primarily at offensive practitioners, but defensive practitioners are also very welcome to attend and broaden their skill set. 
 
-During the workshop we will go over some theory, after which we will set you up with a lab environment. There will be various exercises that you can complete depending on your current skillset and level of comfort with the subject. However, the aim of the workshop is to learn, and explicitly *not* to complete all the exercises. You are free to choose your preferred programming language for malware development, but support during the workshop is provided primarily for the C# and Nim programming languages.
+During the workshop we will go over some theory, after which we will set you up with a lab environment. There will be various exercises that you can complete depending on your current skill set and level of comfort with the subject. However, the aim of the workshop is to learn, and explicitly *not* to complete all the exercises. You are free to choose your preferred programming language for malware development, but support during the workshop is provided primarily for the C# and Nim programming languages.
 
 During the workshop, we will discuss the key topics required to get started with building your own malware. This includes (but is not limited to):
 - The Windows API
