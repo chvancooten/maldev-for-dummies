@@ -15,10 +15,10 @@ This exercise is throwing you in the deep end by design! If you are lost, start 
 
 ### msfvenom
 
-With `msfvenom`, you can use the `csharp` format for C#, and the `raw` format for Nim. The latter requires you to modify the shellcode to be a Nim byte array (make sure you get the length right):
+With `msfvenom`, you can choose a 'format' (`-f`) to get the bytes as the right format for your language. It has formatters for most languages, which you can verify by running `--list formats`. Relevant formats here are `-f csharp`, `-f nim`, `-f go`, or `-f rust`, but there are others. Here's an example command which generates some shellcode you can use to pop a messagebox (works well as a proof-of-concept!):
 
-```
-var shellcode: array[5, byte] = [byte 0x90, 0x90, 0x90, 0x90, 0x90]
+```bash
+msfvenom -p windows/x64/messagebox TEXT='Task failed successfully!' TITLE='Error!' -f nim
 ```
 
 ### Windows API combinations
@@ -33,7 +33,7 @@ Remember the various API calls you can use. There are two combinations that make
  
     This is an alternative to the above, another very popular way of executing shellcode. You can use `VirtualAlloc()` to allocate an executable memory region for the shellcode, and then copy your shellcode into the allocated memory. The result is the same as the first method.
 
-Copying memory can be done without API calls using `Marshal.copy` for C# or `copyMem` for Nim.
+Copying memory can be done without API calls using built-in functions, like `Marshal.copy` for C#, `copyMem` for Nim, `std::ptr::copy` for Rust.
 
 > ⚠ **Note:** Depending on the type of shellcode you are using, you may need to use the `WaitForSingleObject()` API to keep your program alive while it is running your shellcode. This is only required for long-running shellcodes, such as a CobaltStrike beacon.
 
@@ -101,6 +101,11 @@ These steps can be time-consuming, but meanwhile the windows package is updated 
 
 - [shellcode_loader.nim](https://github.com/sh3d0ww01f/nim_shellloader/blob/master/shellcode_loader.nim)
 - [Shellcode execution in same thread](https://github.com/byt3bl33d3r/OffensiveNim/issues/16#issuecomment-757228116)
+
+### Rust
+
+- [Shellcode_Local_Inject](https://github.com/trickster0/OffensiveRust/blob/master/Shellcode_Local_inject/src/main.rs)
+- [Process_Injection_Self_EnumSystemGeoID](https://github.com/trickster0/OffensiveRust/blob/master/Process_Injection_Self_EnumSystemGeoID/src/main.rs)
 
 ## Solution
 

