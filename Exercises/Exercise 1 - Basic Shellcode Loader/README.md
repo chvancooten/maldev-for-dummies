@@ -47,7 +47,11 @@ Alternatively, you may opt to dynamically resolve the function calls. While hard
 
 ### Casting pointers - an alternative to `CreateThread()`
 
-Instead of using the `CreateThread()` API, you can use a technique called "casting a pointer" to turn your shellcode memory into a function and execute it in the current thread. You can see examples [here (C#)](https://tbhaxor.com/execute-unmanaged-code-via-c-pinvoke/) and [here (Nim)](https://github.com/byt3bl33d3r/OffensiveNim/issues/16#issuecomment-757228116). This avoids calling a suspicious API function, but brings problems of its own (such as the program crashing after your shellcode returns).
+Instead of using the `CreateThread()` API, you can use a technique called "casting a pointer" to turn your shellcode memory into a function and execute it in the current thread. You can see examples [here (C#)](https://tbhaxor.com/execute-unmanaged-code-via-c-pinvoke/), [here (Rust)](https://stackoverflow.com/a/46134764), and [here (Nim)](https://github.com/byt3bl33d3r/OffensiveNim/issues/16#issuecomment-757228116). This avoids calling a suspicious API function, but brings problems of its own (such as the thread hanging, or potential program crashes after your shellcode returns).
+
+### Rust tips
+
+There are several 'crates' (libraries) that you can use to call the Windows API from Rust. Microsoft maintains two official crates called [`windows`](https://microsoft.github.io/windows-docs-rs/) and [`windows-sys`](https://docs.rs/windows-sys), the former of which introduces some overhead but allows for more idiomatic programming in Rust, and the latter of which is essentially a library with raw function and type bindings. There are also third-party crates such as `winapi` which achieve essentially the same goal. You can play with the different crates to see which one you like best.
 
 ### Golang tips
 
@@ -97,6 +101,10 @@ These steps can be time-consuming, but meanwhile the windows package is updated 
 - [Offensive P/Invoke: Leveraging the Win32 API from Managed Code](https://posts.specterops.io/offensive-p-invoke-leveraging-the-win32-api-from-managed-code-7eef4fdef16d)
 - [x64ShellcodeLoader.cs](https://gist.github.com/matterpreter/03e2bd3cf8b26d57044f3b494e73bbea)
 
+### Golang
+
+- [CreateThread/main.go](https://github.com/Ne0nd0g/go-shellcode/blob/master/cmd/CreateThread/main.go)
+
 ### Nim
 
 - [shellcode_loader.nim](https://github.com/sh3d0ww01f/nim_shellloader/blob/master/shellcode_loader.nim)
@@ -109,4 +117,4 @@ These steps can be time-consuming, but meanwhile the windows package is updated 
 
 ## Solution
 
-Example solutions are provided in the [solutions folder](solutions/) ([C#](solutions/csharp/), [Nim](solutions/nim/)). Keep in mind that there is no "right" answer, if you made it work that's a valid solution! 
+Example solutions are provided in the [solutions folder](solutions/). Keep in mind that there is no "right" answer, if you made it work that's a valid solution! 

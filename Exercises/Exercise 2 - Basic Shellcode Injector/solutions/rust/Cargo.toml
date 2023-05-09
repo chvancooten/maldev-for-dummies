@@ -1,5 +1,5 @@
 [package]
-name = "basic_shellcode_loader"
+name = "basic_shellcode_injector"
 version = "0.1.0"
 edition = "2021"
 
@@ -12,11 +12,6 @@ opt-level = "z"
 lto = true
 
 # Check out all the crates you can use on https://crates.io
-[dependencies.windows-sys]
-version = "0.48"
-features = [
-    "Win32_Foundation",
-    "Win32_Security",
-    "Win32_System_Memory",
-    "Win32_System_Threading",
-]
+[dependencies]
+windows-sys = {version = "0.48", features = [ "Win32_Foundation", "Win32_Security", "Win32_System_Diagnostics_Debug", "Win32_System_Memory", "Win32_System_Threading" ]}
+sysinfo = "0.29.0"
