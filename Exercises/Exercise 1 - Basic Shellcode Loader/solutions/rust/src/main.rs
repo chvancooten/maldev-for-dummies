@@ -2,8 +2,8 @@
 // It is good practice to further specify the imports for each API type that we want to use to limit clutter in our code
 // In this case, we only specify the crate itself as an import, and specify the types we want to use later on
 // This makes it a bit easier to recognize where our functions are coming from
-use std::{ffi::c_void, ptr};
-use windows_sys; // Some pointer functions and a type we will need
+use windows_sys; 
+use std::{ffi::c_void, ptr}; // Some pointer functions and a type we will need
 
 // Define our inject_local function, which takes a reference to our shellcode as an argument
 // Note the use of `&`, denoting a reference to the shellcode rather than a copy (#JustRustThings)

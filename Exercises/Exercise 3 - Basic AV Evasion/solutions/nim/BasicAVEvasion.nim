@@ -2,9 +2,9 @@ import winim/lean
 
 # Base code taken from Exercise 2, refer there if anything is unclear
 
-# While there is a lot more evasion to do here, this example bypasses most AV (1/26 on antiscan.me)
+# While there is a lot more evasion to do here, this example bypasses most AV (1/26 on antiscan.me) at the time of writing
 # In its current form, it IS detected by Windows Defender
-# However, changing the shellcode to a larger one will get rid of this detection (for some reason)
+# However, changing the shellcode to a larger one or otherwise inflating the binary will get rid of this detection
 # Alternatively, refer to the example solution of Bonus Exercise 3 for an example that does not get detected statically (for now)
 
 # Helper function to XOR our shellcode to a byte seq
