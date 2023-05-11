@@ -1,0 +1,28 @@
+[package]
+name = "basic_edr_evasion"
+version = "0.1.0"
+edition = "2021"
+
+# Some opsec tweaks. Refer to https://github.com/trickster0/OffensiveRust#compiling-the-examples-in-this-repo
+[profile.release]
+strip = "symbols"
+panic = "abort"
+trim-path = true
+opt-level = "z"
+lto = true
+
+# Check out all the crates you can use on https://crates.io
+[dependencies]
+itertools = "0.10.5"
+obfstr = "0.4.3"
+sysinfo = "0.29.0"
+rust_syscalls = {git = "https://github.com/janoglezcampos/rust_syscalls", features = [ "_DIRECT_" ]}
+windows-sys = {version = "0.48", features = [ 
+    "Win32_Foundation", 
+    #"Win32_Security", 
+    #"Win32_System_Diagnostics_Debug", 
+    "Win32_System_Kernel",
+    "Win32_System_Memory", 
+    "Win32_System_Threading",
+    "Win32_System_WindowsProgramming",
+    ]}

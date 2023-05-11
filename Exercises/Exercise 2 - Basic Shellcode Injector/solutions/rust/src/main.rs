@@ -52,8 +52,8 @@ fn inject_remote(shellcode: &[u8], process_id: u32) {
         println!("[+] Created remote thread!");
 
         // Clean up
-        CloseHandle(p_handle);
         CloseHandle(t_handle);
+        CloseHandle(p_handle);
     }
 }
 
