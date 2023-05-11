@@ -15,10 +15,19 @@ This is a programming exercise more than anything else. Adding functionality lik
 - [C# User Input](https://www.w3schools.com/cs/cs_user_input.php)
 - [Process.GetProcessesByName() function](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.getprocessesbyname)
 
+### Golang
+
+- [fmt.Scanln](https://pkg.go.dev/fmt#Scanln)
+
 ### Nim
 
 - [commandLineParams](https://nim-lang.org/docs/os.html#commandLineParams)
 - [minidump_bin.nim](https://github.com/byt3bl33d3r/OffensiveNim/blob/965c44cec96575758eaa42622f699b6ea0d1041a/src/minidump_bin.nim#L36-L48)
+
+### Rust
+
+- [std::io::Stdin::read_line()](https://doc.rust-lang.org/stable/std/io/struct.Stdin.html#method.read_line)
+- [An example implementation of user input in srdi-rs/inject](https://github.com/trickster0/OffensiveRust/blob/master/memN0ps/srdi-rs/inject/src/main.rs#L115-L119)
 
 ## Solution
 
