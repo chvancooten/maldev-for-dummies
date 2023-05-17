@@ -20,4 +20,4 @@ Refer to [Exercise 1](../BONUS%20Exercise%201%20-%20Basic%20Loader%20Without%20C
 
 ## Solution
 
-Example solutions are provided in the [solutions folder](solutions/) ([C#](solutions/csharp/), [Nim](solutions/nim/)). Keep in mind that there is no "right" answer, if you made it work that's a valid solution! 
+Example solutions are provided in the [solutions folder](solutions/). Keep in mind that there is no "right" answer, if you made it work that's a valid solution! 

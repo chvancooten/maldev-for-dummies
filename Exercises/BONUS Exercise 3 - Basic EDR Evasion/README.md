@@ -6,19 +6,19 @@ Modify your loader or injector from any of the previous exercises, such that it 
 
 ## Tips
 
-Remember that EDR looks at the behavior of your malware, and collects telemetry from a variety of sources. This means that you can either focus on avoiding EDR, disguising your malware to be "legitimate enough" not to be detected (hard to do for shellcode injection, unfortunately), finding EDR blind spots, or actively tamper with EDR telemetry collection. A lot of EDR bypasses (such as unhooking or ETW patching) are focused on the latter of these options. The 'References' section contains some nice pointers that include considerations for choosing your preferred EDR bypass method.
+Remember that EDR looks at the behavior of your malware, and collects telemetry from a variety of sources. This means that you can either focus on avoiding EDR, disguising your malware to be "legitimate enough" not to be detected (hard to do for shellcode injection, unfortunately), finding EDR blind spots, or actively evading or tampering with EDR telemetry collection. A lot of EDR bypasses (such as direct system calls, unhooking, or ETW patching) are focused on the latter of these options. The 'References' section contains some nice pointers that include considerations for choosing your preferred EDR bypass method.
 
 ### Tips for testing
 
-Getting access to a commercial EDR is not easy for everyone. A good way to test against a (partially) free EDR is [Elastic Endpoint Security](https://www.elastic.co/security/endpoint-security/). Alternatively, you could try free trials of commercial software. Some AV, such as BitDefender, also do API hooking for an "EDR-like" experience.
+Getting access to a commercial EDR is not always easy. A good way to test against a (partially) free EDR is [Elastic Endpoint Security](https://www.elastic.co/security/endpoint-security/). Alternatively, you could try free trials of commercial software. Some AV, such as BitDefender, also do API hooking for an "EDR-like" experience.
 
 ### Golang tips
 
-The solution in Golang implement direct syscalls thanks to the [`bananaPhone`](https://github.com/C-Sto/BananaPhone) package. This package implements, for now, two techniques to retrieve the syscall ID: Halo's gate and Hell's gate. There is two ways to use this package.
+The solution in Golang implement direct syscalls thanks to the [`BananaPhone`](https://github.com/C-Sto/BananaPhone) package. This package implements, for now, two techniques to retrieve the syscall ID: Halo's gate and Hell's gate. There is two ways to use this package.
 
 The first one is to get the syscall ID and call it directly.
 
-```go
+```golang
 // Retrieve the syscall ID for NtAllocateVirtualMemory
 alloc, err := bp.GetSysID("NtAllocateVirtualMemory")
 ...
@@ -74,12 +74,30 @@ These steps can be time-consuming, but you can find several of the API already i
 
 ## References
 
+### Generic
+
 - [Blinding EDR On Windows](https://synzack.github.io/Blinding-EDR-On-Windows/)
 - [A tale of EDR bypass methods](https://s3cur3th1ssh1t.github.io/A-tale-of-EDR-bypass-methods/)
 - [Lets Create An EDR… And Bypass It!](https://ethicalchaos.dev/2020/05/27/lets-create-an-edr-and-bypass-it-part-1/)
 
 Refer to [Exercise 3](../Exercise%203%20-%20Basic%20AV%20Evasion/) for more references.
 
+
+### C#
+
+- [D/Invoke](https://github.com/TheWover/DInvoke)
+
+### Golang
+
+- [BananaPhone](https://github.com/C-Sto/BananaPhone)
+
+### Nim
+
+- [NimlineWhispers3](https://github.com/klezVirus/NimlineWhispers3)
+
+### Rust
+
+
 ## Solution
 
-Example solutions are provided in the [solutions folder](solutions/) ([C#](solutions/csharp/), [Nim](solutions/nim/)). Keep in mind that there is no "right" answer, if you made it work that's a valid solution! 
+Example solutions are provided in the [solutions folder](solutions/). Keep in mind that there is no "right" answer, if you made it work that's a valid solution! 

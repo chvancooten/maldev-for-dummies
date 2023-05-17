@@ -15,10 +15,10 @@ This exercise is throwing you in the deep end by design! If you are lost, start 
 
 ### msfvenom
 
-With `msfvenom`, you can use the `csharp` format for C#, and the `raw` format for Nim. The latter requires you to modify the shellcode to be a Nim byte array (make sure you get the length right):
+With `msfvenom`, you can choose a 'format' (`-f`) to get the bytes as the right format for your language. It has formatters for most languages, which you can verify by running `--list formats`. Relevant formats here are `-f csharp`, `-f nim`, `-f go`, or `-f rust`, but there are others. Here's an example command which generates some shellcode you can use to pop a messagebox (works well as a proof-of-concept!):
 
-```
-var shellcode: array[5, byte] = [byte 0x90, 0x90, 0x90, 0x90, 0x90]
+```bash
+msfvenom -p windows/x64/messagebox TEXT='Task failed successfully!' TITLE='Error!' -f nim
 ```
 
 ### Windows API combinations
@@ -33,7 +33,7 @@ Remember the various API calls you can use. There are two combinations that make
  
     This is an alternative to the above, another very popular way of executing shellcode. You can use `VirtualAlloc()` to allocate an executable memory region for the shellcode, and then copy your shellcode into the allocated memory. The result is the same as the first method.
 
-Copying memory can be done without API calls using `Marshal.copy` for C# or `copyMem` for Nim.
+Copying memory can be done without API calls using built-in functions, like `Marshal.copy` for C#, `copyMem` for Nim, `std::ptr::copy` for Rust.
 
 > ⚠ **Note:** Depending on the type of shellcode you are using, you may need to use the `WaitForSingleObject()` API to keep your program alive while it is running your shellcode. This is only required for long-running shellcodes, such as a CobaltStrike beacon.
 
@@ -47,7 +47,11 @@ Alternatively, you may opt to dynamically resolve the function calls. While hard
 
 ### Casting pointers - an alternative to `CreateThread()`
 
-Instead of using the `CreateThread()` API, you can use a technique called "casting a pointer" to turn your shellcode memory into a function and execute it in the current thread. You can see examples [here (C#)](https://tbhaxor.com/execute-unmanaged-code-via-c-pinvoke/) and [here (Nim)](https://github.com/byt3bl33d3r/OffensiveNim/issues/16#issuecomment-757228116). This avoids calling a suspicious API function, but brings problems of its own (such as the program crashing after your shellcode returns).
+Instead of using the `CreateThread()` API, you can use a technique called "casting a pointer" to turn your shellcode memory into a function and execute it in the current thread. You can see examples [here (C#)](https://tbhaxor.com/execute-unmanaged-code-via-c-pinvoke/), [here (Rust)](https://stackoverflow.com/a/46134764), and [here (Nim)](https://github.com/byt3bl33d3r/OffensiveNim/issues/16#issuecomment-757228116). This avoids calling a suspicious API function, but brings problems of its own (such as the thread hanging, or potential program crashes after your shellcode returns).
+
+### Rust tips
+
+There are several 'crates' (libraries) that you can use to call the Windows API from Rust. Microsoft maintains two official crates called [`windows`](https://microsoft.github.io/windows-docs-rs/) and [`windows-sys`](https://docs.rs/windows-sys), the former of which introduces some overhead but allows for more idiomatic programming in Rust, and the latter of which is essentially a library with raw function and type bindings. There are also third-party crates such as `winapi` which achieve essentially the same goal. You can play with the different crates to see which one you like best.
 
 ### Golang tips
 
@@ -97,11 +101,20 @@ These steps can be time-consuming, but meanwhile the windows package is updated 
 - [Offensive P/Invoke: Leveraging the Win32 API from Managed Code](https://posts.specterops.io/offensive-p-invoke-leveraging-the-win32-api-from-managed-code-7eef4fdef16d)
 - [x64ShellcodeLoader.cs](https://gist.github.com/matterpreter/03e2bd3cf8b26d57044f3b494e73bbea)
 
+### Golang
+
+- [CreateThread/main.go](https://github.com/Ne0nd0g/go-shellcode/blob/master/cmd/CreateThread/main.go)
+
 ### Nim
 
 - [shellcode_loader.nim](https://github.com/sh3d0ww01f/nim_shellloader/blob/master/shellcode_loader.nim)
 - [Shellcode execution in same thread](https://github.com/byt3bl33d3r/OffensiveNim/issues/16#issuecomment-757228116)
 
+### Rust
+
+- [Shellcode_Local_Inject](https://github.com/trickster0/OffensiveRust/blob/master/Shellcode_Local_inject/src/main.rs)
+- [Process_Injection_Self_EnumSystemGeoID](https://github.com/trickster0/OffensiveRust/blob/master/Process_Injection_Self_EnumSystemGeoID/src/main.rs)
+
 ## Solution
 
-Example solutions are provided in the [solutions folder](solutions/) ([C#](solutions/csharp/), [Nim](solutions/nim/)). Keep in mind that there is no "right" answer, if you made it work that's a valid solution! 
+Example solutions are provided in the [solutions folder](solutions/). Keep in mind that there is no "right" answer, if you made it work that's a valid solution! 
