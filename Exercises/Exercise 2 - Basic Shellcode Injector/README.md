@@ -8,6 +8,8 @@ Create a new project that injects your shellcode in a remote process, such as `e
 
 This exercise is actually very similar to [Exercise 1](../Exercise%201%20-%20Basic%20Shellcode%20Loader/) in terms of implementation. The basic approach is comparable to the `VirtualAlloc()` method we saw there, except this time we are using a different API combination: `OpenProcess()` to get a handle on the target process, `VirtualAllocEx()` to allocate executable memory in the remote process, `WriteProcessMemory()` to copy the shellcode into the allocated, and `CreateRemoteThread()` to execute the shellcode as part of the target process.
 
+> ℹ **Note:** There are plenty of alternatives to the above choice of API calls. Check out [malapi.io](https://malapi.io/) for an excellent overview of Windows API functions that can be used maliciously. Especially the 'Injection' section is relevant here!
+
 > 😎 If you're feeling adventurous, you can use the native API (Nt-functions from `NTDLL.dll`) counterparts of these functions instead. Alternatively, look at other ways to expose your shellcode to the target process' memory, such as `NtCreateSection()` and `NtMapViewOfSection()` (example [here](https://www.ired.team/offensive-security/code-injection-process-injection/ntcreatesection-+-ntmapviewofsection-code-injection)).
 
 ### Getting a handle
@@ -35,6 +37,7 @@ When designing malware that injects remotely, you need to be conscious about the
 ### Rust
 
 - [Process_Injection_CreateRemoteThread](https://github.com/trickster0/OffensiveRust/blob/master/Process_Injection_CreateRemoteThread/src/main.rs)
+- [Shellcode_Runner_Classic-rs](https://github.com/memN0ps/arsenal-rs/blob/main/shellcode_runner_classic-rs/src/main.rs)
 
 ## Solution
 

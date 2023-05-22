@@ -97,6 +97,7 @@ Refer to [Exercise 3](../Exercise%203%20-%20Basic%20AV%20Evasion/) for more refe
 
 ### Rust
 
+- [Rust_Syscalls](https://github.com/janoglezcampos/rust_syscalls)
 
 ## Solution
 
