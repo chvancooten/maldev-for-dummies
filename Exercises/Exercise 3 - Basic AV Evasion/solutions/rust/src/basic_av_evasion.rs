@@ -15,22 +15,13 @@ use windows_sys::Win32::{
 // Helper function to calculate primes used for sandbox evasion
 #[no_mangle]
 #[inline(never)] // Tell the compiler not to optimize our function :)
-fn calc_primes(iterations: i32) -> () {
+fn calc_primes(iterations: i32) {
     let mut prime = 2;
     let mut i = 0;
     while i < iterations {
-        let mut is_prime = true;
-        for j in 2..prime {
-            if prime % j == 0 {
-                is_prime = false;
-                break;
-            }
-        }
-
-        if is_prime {
+        if (2..prime).all(|j| prime % j != 0) {
             i += 1;
         }
-
         prime += 1;
     }
 }
@@ -128,7 +119,7 @@ fn main() {
     // Perform prime calculations until a very high number is reached
     // This will take a while, hopefully timing out any sandboxes inspecting us
     // (This was not needed to reduce static detections in testing, but is good practice against basic dynamic analysis)
-    calc_primes(40000); // about 30 seconds depending on CPU and build type (debug vs release)
+    calc_primes(25000); // about 30 seconds or more on, depending on CPU and build type (debug vs release)
 
     // Find the "explorer.exe" as in Exercise 2
     let s = System::new_all();
