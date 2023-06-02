@@ -33,7 +33,7 @@ Remember the various API calls you can use. There are two combinations that make
  
     This is an alternative to the above, another very popular way of executing shellcode. You can use `VirtualAlloc()` to allocate an executable memory region for the shellcode, and then copy your shellcode into the allocated memory. The result is the same as the first method.
 
-Copying memory can be done without API calls using built-in functions, like `Marshal.copy` for C#, `copyMem` for Nim, `std::ptr::copy` for Rust.
+Copying memory can be done without API calls using built-in functions, like `Marshal.copy` for C#, `copyMem` for Nim, `std::ptr::copy` for Rust and `memcpy` in C.
 
 > ⚠ **Note:** Depending on the type of shellcode you are using, you may need to use the `WaitForSingleObject()` API to keep your program alive while it is running your shellcode. This is only required for long-running shellcodes, such as a CobaltStrike beacon.
 
@@ -47,7 +47,7 @@ Alternatively, you may opt to dynamically resolve the function calls. While hard
 
 ### Casting pointers - an alternative to `CreateThread()`
 
-Instead of using the `CreateThread()` API, you can use a technique called "casting a pointer" to turn your shellcode memory into a function and execute it in the current thread. You can see examples [here (C#)](https://tbhaxor.com/execute-unmanaged-code-via-c-pinvoke/), [here (Rust)](https://stackoverflow.com/a/46134764), and [here (Nim)](https://github.com/byt3bl33d3r/OffensiveNim/issues/16#issuecomment-757228116). This avoids calling a suspicious API function, but brings problems of its own (such as the thread hanging, or potential program crashes after your shellcode returns).
+Instead of using the `CreateThread()` API, you can use a technique called "casting a pointer" to turn your shellcode memory into a function and execute it in the current thread. You can see examples [here (C#)](https://tbhaxor.com/execute-unmanaged-code-via-c-pinvoke/), [here (Rust)](https://stackoverflow.com/a/46134764), [here (Nim)](https://github.com/byt3bl33d3r/OffensiveNim/issues/16#issuecomment-757228116) and [here (C)](https://www.ired.team/offensive-security/code-injection-process-injection/process-injection). This avoids calling a suspicious API function, but brings problems of its own (such as the thread hanging, or potential program crashes after your shellcode returns).
 
 ### Rust tips
 
@@ -114,6 +114,7 @@ These steps can be time-consuming, but meanwhile the windows package is updated 
 
 - [Shellcode_Local_Inject](https://github.com/trickster0/OffensiveRust/blob/master/Shellcode_Local_inject/src/main.rs)
 - [Process_Injection_Self_EnumSystemGeoID](https://github.com/trickster0/OffensiveRust/blob/master/Process_Injection_Self_EnumSystemGeoID/src/main.rs)
+
 
 ## Solution
 

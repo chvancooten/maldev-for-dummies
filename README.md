@@ -28,6 +28,7 @@ To get started with malware development, you will need a dev machine so that you
 - **Nim lang**: Follow the [download instructions](https://nim-lang.org/install.html). [Choosenim](https://github.com/dom96/choosenim) is a convenient utility that can be used to automate the installation process.
 - **Golang** (thanks to @nodauf for the PR): Follow the [download instructions](https://go.dev/doc/install).
 - **Rust**: [Rustup](https://www.rust-lang.org/tools/install) can be used to install Rust along with the required toolchains. 
+- **C**: Visual Studio will give you the option to download the MSVC runtime and the Windows SDK runtime. Optionally you could also install another compiler on your Windows system such as [mingw](https://www.mingw-w64.org/downloads/)
 
 Don't forget to disable Windows Defender or add the appropriate exclusions, so your hard work doesn't get quarantined! Later on, we can test on a separate machine with defensive controls like AV enabled.
 
@@ -97,6 +98,15 @@ If you want to optimize your build for size and strip debug information, you can
 cargo build --release
 ```
 
+### C
+
+C code is easiest to compile via Visual Studio itself. If you decide to create C malware and use Visual Studio as your IDE, you will have to select the console application (c++) template and then rename your source file from `.cpp` to `.c`. This will automagically tell Visual Studio to interpret your source code as C instead of C++.
+If you wish to compile it manually, it can also be done using the following command.
+
+```
+cl sourceCodeName.c
+```
+
 ## Dependencies
 
 ### C#
@@ -122,6 +132,10 @@ go mod tidy
 ### Rust
 
 Some examples depend on the `windows-sys` crate to call the Windows API. Since we are using Cargo, packages will be automatically managed when you compile a test or release build.
+
+### C
+
+Most solutions can be compiled without dependencies. In the C world, dependencies are often provided in the form of "header" files.
 
 ## Resources
 
